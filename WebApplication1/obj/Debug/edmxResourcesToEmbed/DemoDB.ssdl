@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="OrderApprovals" EntityType="Model1.Store.OrderApprovals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderApprovalStatuses" EntityType="Model1.Store.OrderApprovalStatuses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderDrafts" EntityType="Model1.Store.OrderDrafts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderDraftStatuses" EntityType="Model1.Store.OrderDraftStatuses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderPayments" EntityType="Model1.Store.OrderPayments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderPromotions" EntityType="Model1.Store.OrderPromotions" store:Type="Tables" store:Schema="dbo" store:Name="OrderPromotions">
+      <DefiningQuery>SELECT 
+      [OrderPromotions].[OrderID] AS [OrderID], 
+      [OrderPromotions].[Number] AS [Number], 
+      [OrderPromotions].[PercentageDiscount] AS [PercentageDiscount], 
+      [OrderPromotions].[MonetaryDiscount] AS [MonetaryDiscount]
+      FROM [dbo].[OrderPromotions] AS [OrderPromotions]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Orders" EntityType="Model1.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderStatuses" EntityType="Model1.Store.OrderStatuses" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_OrderApprovals_OrderApprovalStatuses" Association="Model1.Store.FK_OrderApprovals_OrderApprovalStatuses">
+      <End Role="OrderApprovalStatuses" EntitySet="OrderApprovalStatuses" />
+      <End Role="OrderApprovals" EntitySet="OrderApprovals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderApprovals_Orders" Association="Model1.Store.FK_OrderApprovals_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderApprovals" EntitySet="OrderApprovals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDrafts_OrderDraftStatuses" Association="Model1.Store.FK_OrderDrafts_OrderDraftStatuses">
+      <End Role="OrderDraftStatuses" EntitySet="OrderDraftStatuses" />
+      <End Role="OrderDrafts" EntitySet="OrderDrafts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDrafts_Orders" Association="Model1.Store.FK_OrderDrafts_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDrafts" EntitySet="OrderDrafts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderPayments_Orders" Association="Model1.Store.FK_OrderPayments_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderPayments" EntitySet="OrderPayments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderPromotions_Orders" Association="Model1.Store.FK_OrderPromotions_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderPromotions" EntitySet="OrderPromotions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_OrderStatuses" Association="Model1.Store.FK_Orders_OrderStatuses">
+      <End Role="OrderStatuses" EntitySet="OrderStatuses" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="OrderApprovals">
+    <Key>
+      <PropertyRef Name="OrderApprovalID" />
+    </Key>
+    <Property Name="OrderApprovalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="OrderApprovalStatusID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="Comment" Type="varchar" MaxLength="500" />
+    <Property Name="DateApproved" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderApprovalStatuses">
+    <Key>
+      <PropertyRef Name="OrderApprovalStatusID" />
+    </Key>
+    <Property Name="OrderApprovalStatusID" Type="int" Nullable="false" />
+    <Property Name="OrderApprovalStatus" Type="varchar" Nullable="false" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="OrderDrafts">
+    <Key>
+      <PropertyRef Name="OrderDraftID" />
+    </Key>
+    <Property Name="OrderDraftID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="OrderDraftStatusID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDraftStatuses">
+    <Key>
+      <PropertyRef Name="OrderDraftStatusID" />
+    </Key>
+    <Property Name="OrderDraftStatusID" Type="int" Nullable="false" />
+    <Property Name="OrderDraftStatus" Type="varchar" Nullable="false" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="OrderPayments">
+    <Key>
+      <PropertyRef Name="OrderPaymentID" />
+    </Key>
+    <Property Name="OrderPaymentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="CashReceived" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="CashRefund" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="CorporateFunding" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="DateBilled" Type="datetime" />
+    <Property Name="LineItemID" Type="int" />
+    <Property Name="MailingID" Type="int" />
+    <Property Name="BillingID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Percussion.dbo.OrderPromotions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="OrderPromotions">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="Number" />
+      <PropertyRef Name="PercentageDiscount" />
+      <PropertyRef Name="MonetaryDiscount" />
+    </Key>
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="Number" Type="varchar" Nullable="false" MaxLength="8" />
+    <Property Name="PercentageDiscount" Type="decimal" Nullable="false" Precision="3" Scale="2" />
+    <Property Name="MonetaryDiscount" Type="decimal" Nullable="false" Scale="3" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="DateCreated" Type="smalldatetime" />
+    <Property Name="DateUpdated" Type="smalldatetime" />
+    <Property Name="OrderStatusID" Type="int" />
+    <Property Name="TotalPrice" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="Tax" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="ShippingCost" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="Discount" Type="decimal" Nullable="false" Precision="3" Scale="2" />
+    <Property Name="ListPrice" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="Handling" Type="decimal" Nullable="false" Scale="3" />
+    <Property Name="OrderNumber" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="OrderStatuses">
+    <Key>
+      <PropertyRef Name="OrderStatusID" />
+    </Key>
+    <Property Name="OrderStatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrderStatus" Type="varchar" Nullable="false" MaxLength="32" />
+    <Property Name="Rank" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_OrderApprovals_OrderApprovalStatuses">
+    <End Role="OrderApprovalStatuses" Type="Model1.Store.OrderApprovalStatuses" Multiplicity="1" />
+    <End Role="OrderApprovals" Type="Model1.Store.OrderApprovals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderApprovalStatuses">
+        <PropertyRef Name="OrderApprovalStatusID" />
+      </Principal>
+      <Dependent Role="OrderApprovals">
+        <PropertyRef Name="OrderApprovalStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderApprovals_Orders">
+    <End Role="Orders" Type="Model1.Store.Orders" Multiplicity="1" />
+    <End Role="OrderApprovals" Type="Model1.Store.OrderApprovals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderApprovals">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDrafts_OrderDraftStatuses">
+    <End Role="OrderDraftStatuses" Type="Model1.Store.OrderDraftStatuses" Multiplicity="1" />
+    <End Role="OrderDrafts" Type="Model1.Store.OrderDrafts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderDraftStatuses">
+        <PropertyRef Name="OrderDraftStatusID" />
+      </Principal>
+      <Dependent Role="OrderDrafts">
+        <PropertyRef Name="OrderDraftStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDrafts_Orders">
+    <End Role="Orders" Type="Model1.Store.Orders" Multiplicity="1" />
+    <End Role="OrderDrafts" Type="Model1.Store.OrderDrafts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDrafts">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderPayments_Orders">
+    <End Role="Orders" Type="Model1.Store.Orders" Multiplicity="1" />
+    <End Role="OrderPayments" Type="Model1.Store.OrderPayments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderPayments">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderPromotions_Orders">
+    <End Role="Orders" Type="Model1.Store.Orders" Multiplicity="1" />
+    <End Role="OrderPromotions" Type="Model1.Store.OrderPromotions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderPromotions">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_OrderStatuses">
+    <End Role="OrderStatuses" Type="Model1.Store.OrderStatuses" Multiplicity="0..1" />
+    <End Role="Orders" Type="Model1.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderStatuses">
+        <PropertyRef Name="OrderStatusID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="OrderStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

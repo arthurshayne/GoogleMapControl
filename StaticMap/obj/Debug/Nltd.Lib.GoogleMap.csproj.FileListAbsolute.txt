@@ -1,0 +1,5 @@
+C:\Users\xzshan\Documents\Visual Studio 2010\Projects\WebApplication1\StaticMap\bin\Debug\Nltd.Lib.GoogleMap.dll
+C:\Users\xzshan\Documents\Visual Studio 2010\Projects\WebApplication1\StaticMap\bin\Debug\Nltd.Lib.GoogleMap.pdb
+C:\Users\xzshan\Documents\Visual Studio 2010\Projects\WebApplication1\StaticMap\obj\Debug\Nltd.Lib.GoogleMap.dll
+C:\Users\xzshan\Documents\Visual Studio 2010\Projects\WebApplication1\StaticMap\obj\Debug\Nltd.Lib.GoogleMap.pdb
+C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\StaticMap\obj\Debug\Nltd.Lib.GoogleMap.csprojResolveAssemblyReference.cache

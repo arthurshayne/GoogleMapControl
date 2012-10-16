@@ -1,0 +1,5 @@
+c:\users\xzshan\documents\visual studio 2010\Projects\StaticMapConsole\StaticMap\bin\Debug\StaticMap.dll
+c:\users\xzshan\documents\visual studio 2010\Projects\StaticMapConsole\StaticMap\bin\Debug\StaticMap.pdb
+c:\users\xzshan\documents\visual studio 2010\Projects\StaticMapConsole\StaticMap\obj\Debug\StaticMap.dll
+c:\users\xzshan\documents\visual studio 2010\Projects\StaticMapConsole\StaticMap\obj\Debug\StaticMap.pdb
+C:\Users\xzshan\documents\visual studio 2010\Projects\StaticMapConsole\StaticMap\obj\Debug\StaticMap.csprojResolveAssemblyReference.cache

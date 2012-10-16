@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{9E8174F6-CC8D-4D59-9448-99E07F4F4C59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nltd.Web.UI.WebControls.GoogleMap", "GoogleMapControl\Nltd.Web.UI.WebControls.GoogleMap.csproj", "{9CD99657-9723-4A2F-B523-4CEBB762F023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nltd.Lib.GoogleMap", "StaticMap\Nltd.Lib.GoogleMap.csproj", "{6CAAB1C9-8B3F-4D4A-B1F1-6D536AB74741}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E8174F6-CC8D-4D59-9448-99E07F4F4C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E8174F6-CC8D-4D59-9448-99E07F4F4C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E8174F6-CC8D-4D59-9448-99E07F4F4C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E8174F6-CC8D-4D59-9448-99E07F4F4C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CD99657-9723-4A2F-B523-4CEBB762F023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CD99657-9723-4A2F-B523-4CEBB762F023}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CD99657-9723-4A2F-B523-4CEBB762F023}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CD99657-9723-4A2F-B523-4CEBB762F023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CAAB1C9-8B3F-4D4A-B1F1-6D536AB74741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CAAB1C9-8B3F-4D4A-B1F1-6D536AB74741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CAAB1C9-8B3F-4D4A-B1F1-6D536AB74741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CAAB1C9-8B3F-4D4A-B1F1-6D536AB74741}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
