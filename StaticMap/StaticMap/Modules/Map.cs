@@ -146,10 +146,5 @@ namespace Nltd.Lib.GoogleMap.StaticMap.Modules
         /// [required] get or set wheter use of sensor
         /// </summary>
         public bool IsUseSensor { get; set; }
-
-        /// <summary>
-        /// scaling for internal
-        /// </summary>
-        public bool IsHighQality { get; set; }
     }
 }

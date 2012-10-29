@@ -349,7 +349,6 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
                     BaseUrl = BaseUrl,
                     Center = Center,
                     ImageFormat = ImageFormat,
-                    IsHighQality = IsHighQality,
                     IsUseSensor = IsUseSensor,
                     Language = Language,
                     MapType = MapType,

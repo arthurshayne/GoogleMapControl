@@ -29,34 +29,7 @@ namespace Nltd.Lib.GoogleMap.StaticMap.Dealer
 
         public Image GetMapImage(Map m)
         {
-            Image showImg = Image.FromStream(new MemoryStream(GetMapImageByte(m)));
-            int scale = m.Scale ?? 2;
-
-            if (m.IsHighQality)
-            {
-                int iSourceWidth = showImg.Width;
-                int iSourceHeight = showImg.Height;
-                float fSourceHorResolution = showImg.HorizontalResolution;
-                float fSourceVerResolution = showImg.VerticalResolution;
-
-                //图象dpi
-                Bitmap bmpTarget = new Bitmap(iSourceWidth / scale, iSourceHeight / scale);
-                bmpTarget.SetResolution(fSourceHorResolution * scale, fSourceVerResolution * scale);
-
-                using (Graphics g = Graphics.FromImage(bmpTarget))
-                {
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    g.DrawImage(showImg, 0, 0, iSourceWidth / scale, iSourceHeight / scale);
-                }
-
-                return bmpTarget;
-            }
-            else
-            {
-                return showImg;
-            }
+            return Image.FromStream(new MemoryStream(GetMapImageByte(m)));
         }
     }
 }
