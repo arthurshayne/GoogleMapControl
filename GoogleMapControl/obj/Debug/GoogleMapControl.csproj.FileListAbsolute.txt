@@ -1,9 +1,0 @@
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\bin\Debug\GoogleMapControl.dll
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\bin\Debug\GoogleMapControl.pdb
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\bin\Debug\StaticMap.dll
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\bin\Debug\StaticMap.pdb
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\obj\Debug\GoogleMapControl.csprojResolveAssemblyReference.cache
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\obj\Debug\GoogleMapControl.dll
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\obj\Debug\GoogleMapControl.pdb
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\obj\Debug\GoogleMapControl.csproj.GenerateResource.Cache
-C:\Users\xzshan\documents\visual studio 2010\Projects\WebApplication1\GoogleMapControl\obj\Debug\GoogleMapControl.StaticMapEditor.resources
