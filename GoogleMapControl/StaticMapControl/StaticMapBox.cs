@@ -305,9 +305,13 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
                 {
                     return new Location(VisiableAddress);
                 }
+                else if (VisiableLatitude != null && VisiableLongitude != null)
+                {
+                    return new Location(VisiableLatitude.Value, VisiableLongitude.Value);
+                }
                 else
                 {
-                    return new Location(VisiableLatitude ?? 0, VisiableLongitude ?? 0);
+                    return null;
                 }
             }
         
@@ -321,9 +325,13 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
                 {
                     return new Location(CenterAddress);
                 }
+                else if (CenterLatitude != null && CenterLongitude != null)
+                {
+                    return new Location(CenterLatitude.Value, CenterLongitude.Value);
+                }
                 else
                 {
-                    return new Location(CenterLatitude??0, CenterLongitude??0);
+                    return null;
                 }
             }
         }
@@ -367,6 +375,24 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         {
             this.ImageUrl = CMap.Url;
             base.Render(writer);
+        }
+
+        protected override void LoadViewState(object savedState)
+        {
+            if (savedState != null)
+            {
+                Tuple<object, object[]> alldata = savedState as Tuple<object, object[]>;
+                base.LoadViewState(alldata.Item1);
+
+                CMarkers.LoadViewState(alldata.Item2[0]);
+            }
+        }
+
+        protected override object SaveViewState()
+        {
+            object[] savedata = new object[1];
+            savedata[0] = CMarkers.SaveViewState();
+            return new Tuple<object, object[]>(base.SaveViewState(), savedata);
         }
     }
 }

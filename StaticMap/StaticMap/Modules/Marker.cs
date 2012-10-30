@@ -26,7 +26,7 @@ namespace Nltd.Lib.GoogleMap.StaticMap.Modules
         /// <summary>
         /// [optional] get or set marker color
         /// </summary>
-        public ObjectColor Color { get; set; }
+        public virtual ObjectColor Color { get; set; }
 
         /// <summary>
         /// [optional] get or set marker label

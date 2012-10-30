@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StaticMapControl\Modules\CMap.cs" />
+    <Compile Include="StaticMapControl\Modules\CObjectColor.cs" />
     <Compile Include="StaticMapControl\Modules\LocationCollection.cs" />
     <Compile Include="StaticMapControl\Modules\MarkerCollection.cs" />
     <Compile Include="StaticMapControl\Modules\CLocation.cs" />

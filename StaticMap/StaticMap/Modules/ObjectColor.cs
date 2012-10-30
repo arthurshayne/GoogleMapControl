@@ -8,8 +8,8 @@ namespace Nltd.Lib.GoogleMap.StaticMap.Modules
 {
     public class ObjectColor
     {
-        int? color;
-        ColorEnum? colorEnum;
+        protected int? color;
+        protected ColorEnum? colorEnum;
 
         /// <summary>
         /// use int to initial, eg. new Color(0xFFFFF)
