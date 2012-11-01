@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Reflection;
 using System.Linq;
-using Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl.Editor;
 
 namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
 {
