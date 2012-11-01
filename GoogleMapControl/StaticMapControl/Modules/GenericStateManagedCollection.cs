@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="MarkCollection.cs" company="">
+// <copyright file="LocationCollection.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,19 +11,18 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
     using System.Linq;
     using System.Text;
     using System.Web.UI;
-    using Nltd.Lib.GoogleMap.StaticMap.Modules;
+    using System.ComponentModel;
+    using System.ComponentModel.Design;
+    using System.Drawing.Design;
+    using System.Collections;
 
     /// <summary>
-    /// MarkCollection
+    /// LocationCollection
     /// </summary>
-    public class MarkerCollection : List<CMarker>, IStateManager
+    public class GenericStateManagedCollection<T> : List<T>, IStateManager where T : IStateManager, new()
     {
+        # region IStateManager
         private bool _isTrackingViewState;
-
-        public List<Marker> ToMarkerList()
-        {
-            return this.ToList<Marker>();
-        }
 
         public bool IsTrackingViewState
         {
@@ -35,10 +34,10 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             if (state != null)
             {
                 object[] data = state as object[];
-                CMarker temp;
-                foreach (object d in data)
+                T temp;
+                foreach (var d in data)
                 {
-                    temp = new CMarker();
+                    temp = new T();
                     temp.LoadViewState(d);
                     this.Add(temp);
                 }
@@ -47,9 +46,9 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
 
         public object SaveViewState()
         {
-            int num = this.Count;
-            object[] data = new object[num];
-            for (int i = 0; i < num; i++)
+            int count = this.Count;
+            object[] data = new object[count];
+            for (int i = 0; i < count; i++)
             {
                 data[i] = this[i].SaveViewState();
             }
@@ -61,5 +60,6 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         {
             _isTrackingViewState = true;
         }
+        #endregion
     }
 }

@@ -8,11 +8,10 @@ using System.Text;
 using System.Diagnostics;
 using System.ComponentModel.Design;
 using System;
-using Nltd.Lib.GoogleMap.StaticMap.Modules;
-using Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl.Modules;
 using System.Collections;
 using System.Reflection;
 using System.Linq;
+using Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl.Editor;
 
 namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
 {
@@ -20,11 +19,73 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
     [Designer(typeof(StaticMapDesigner))]
     public class StaticMapBox : Image
     {
-        public StaticMapBox()
+
+        /// <summary>
+        /// get url for request
+        /// </summary>
+        public override string ImageUrl
         {
-            BaseUrl = "http://maps.google.com/maps/api/staticmap";
-            this.Height = 300;
-            this.Width = 300;
+            get
+            {
+                if (Markers == null)
+                {
+                    Trace.Assert(Center != null);
+                    Trace.Assert(Zoom != null);
+                }
+
+                StringBuilder sb = new StringBuilder(BaseUrl);
+                sb.Append("?a=1");
+
+                if (Center != null)
+                    sb.Append("&center=").Append(Center);
+
+                if (Zoom != null)
+                    sb.Append("&zoom=").Append(Zoom);
+
+                //size is required
+                sb.Append("&size=").Append(Size);
+
+                if (Scale != null)
+                    sb.Append("&scale=").Append(Scale);
+
+                if (ImageFormat != null)
+                    sb.Append("&format=").Append(ImageFormat);
+
+                if (MapType != null)
+                    sb.Append("&maptype=").Append(MapType);
+
+                if (Markers != null)
+                {
+                    foreach (Marker m in Markers)
+                    {
+                        sb.Append("&markers=").Append(m);
+                    }
+                }
+
+                if (Paths != null)
+                {
+                    foreach (Path p in Paths)
+                    {
+                        sb.Append("&path=").Append(p);
+                    }
+                }
+
+                if (Styles != null)
+                {
+                    foreach (MapStyle s in Styles)
+                    {
+                        sb.Append("&style=").Append(s);
+                    }
+                }
+
+                if (VisiableLocation != null)
+                {
+                    sb.Append("&visible=").Append(VisiableLocation);
+                }
+
+                sb.Append("&sensor=").Append(IsUseSensor.ToString().ToLower());
+                return sb.ToString();
+            }
         }
 
         /// <summary>
@@ -36,11 +97,59 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         {
             get
             {
-                return ViewState["BaseUrl"] as string;
+                return ViewState["BaseUrl"] as string ?? "http://maps.google.com/maps/api/staticmap";
             }
             set
             {
                 ViewState["BaseUrl"] = value;
+            }
+        }
+
+        /// <summary>
+        /// get or set Height
+        /// </summary>
+        [Category("Google")]
+        public override Unit Height
+        {
+            get
+            {
+                if (base.Height.Value == 0)
+                    base.Height = new Unit(300);
+                return base.Height;
+            }
+            set
+            {
+                base.Height = value;
+            }
+        }
+
+        /// <summary>
+        /// get or set Width
+        /// </summary>
+        [Category("Google")]
+        public override Unit Width
+        {
+            get
+            {
+                if (base.Width.Value == 0)
+                    base.Width = new Unit(300);
+                return base.Width;
+            }
+            set
+            {
+                base.Width = value;
+            }
+        }
+
+
+        /// <summary>
+        /// get MapSize
+        /// </summary>
+        internal MapSize Size
+        {
+            get
+            {
+                return new MapSize() { Height = (int)this.Height.Value, Width = (int)this.Width.Value };
             }
         }
 
@@ -92,6 +201,28 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             }
         }
 
+        /// <summary>
+        /// get center
+        /// </summary>
+        internal Location Center
+        {
+            get
+            {
+                if (CenterAddress != null)
+                {
+                    return new Location() { Address = CenterAddress };
+                }
+                else if (CenterLatitude != null && CenterLongitude != null)
+                {
+                    return new Location() { Latitude = CenterLatitude.Value, Longitude = CenterLongitude.Value }; ;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
 
         /// <summary>
         /// [required when no markers] get or set center
@@ -139,6 +270,29 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             {
                 ViewState["VisiableLongitude"] = value;
             }
+        }
+
+        /// <summary>
+        /// get some location need to visible
+        /// </summary>
+        internal Location VisiableLocation
+        {
+            get
+            {
+                if (VisiableAddress != null)
+                {
+                    return new Location() { Address = VisiableAddress };
+                }
+                else if (VisiableLatitude != null && VisiableLongitude != null)
+                {
+                    return new Location() { Latitude = VisiableLatitude.Value, Longitude = VisiableLongitude.Value };
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
         }
 
         /// <summary>
@@ -238,24 +392,7 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             }
         }
 
-        /// <summary>
-        /// scaling for internal
-        /// </summary>
-        [Category("Google")]
-        [DefaultValue(false)]
-        public bool IsHighQality
-        {
-            get
-            {
-                return ViewState["IsHighQality"] == null ? false : (bool)ViewState["IsHighQality"];
-            }
-            set
-            {
-                ViewState["IsHighQality"] = value;
-            }
-        }
-
-        private MarkerCollection cmarkers = new MarkerCollection();
+        private GenericStateManagedCollection<Marker> markers;
 
         /// <summary>
         /// [optional] get or set markers
@@ -263,12 +400,19 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         [Category("Google")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [PersistenceMode(PersistenceMode.InnerProperty)]
-        public MarkerCollection CMarkers
+        public GenericStateManagedCollection<Marker> Markers
         {
-            get{ return cmarkers;}
+            get
+            {
+                if (markers == null)
+                {
+                    markers = new GenericStateManagedCollection<Marker>();
+                }
+                return markers;
+            }
         }
 
-        private PathCollection cpaths = new PathCollection();
+        private GenericStateManagedCollection<Path> paths;
 
         /// <summary>
         /// [optional] get or set paths
@@ -276,12 +420,19 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         [Category("Google")]
         [PersistenceMode(PersistenceMode.InnerProperty)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PathCollection CPaths
+        public GenericStateManagedCollection<Path> Paths
         {
-            get { return cpaths; }
+            get
+            {
+                if (paths == null)
+                {
+                    paths = new GenericStateManagedCollection<Path>();
+                }
+                return paths;
+            }
         }
 
-        public MapStyleCollection cstyles = new MapStyleCollection();
+        private GenericStateManagedCollection<MapStyle> styles;
 
         /// <summary>
         /// [optional] get or set styles
@@ -289,110 +440,45 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         [Category("Google")]
         [PersistenceMode(PersistenceMode.InnerProperty)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public MapStyleCollection CStyles
+        public GenericStateManagedCollection<MapStyle> Styles
         {
-            get { return cstyles; }
-        }
-
-        /// <summary>
-        /// [optional] get or set some location need to visible
-        /// </summary>
-        internal Location VisiableLocation 
-        {
-            get
+            get 
             {
-                if (VisiableAddress != null)
+                if (styles == null)
                 {
-                    return new Location(VisiableAddress);
+                    styles = new GenericStateManagedCollection<MapStyle>();
                 }
-                else if (VisiableLatitude != null && VisiableLongitude != null)
-                {
-                    return new Location(VisiableLatitude.Value, VisiableLongitude.Value);
-                }
-                else
-                {
-                    return null;
-                }
+                return styles; 
             }
-        
-        }
-
-        internal Location Center
-        {
-            get
-            {
-                if (CenterAddress != null)
-                {
-                    return new Location(CenterAddress);
-                }
-                else if (CenterLatitude != null && CenterLongitude != null)
-                {
-                    return new Location(CenterLatitude.Value, CenterLongitude.Value);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        /// <summary>
-        /// get MapSize
-        /// </summary>
-        [Browsable(false)]
-        internal MapSize Size
-        {
-            get
-            {
-                return new MapSize() { Height = (int)this.Height.Value,Width = (int)this.Width.Value};
-            }
-        }
-
-        internal CMap CMap
-        {
-            get
-            {
-                return new CMap()
-                {
-                    BaseUrl = BaseUrl,
-                    Center = Center,
-                    ImageFormat = ImageFormat,
-                    IsUseSensor = IsUseSensor,
-                    Language = Language,
-                    MapType = MapType,
-                    CMarkers = CMarkers,
-                    CPaths = CPaths,
-                    Scale = Scale,
-                    Size = Size,
-                    CStyles = CStyles,
-                    Visible = VisiableLocation,
-                    Zoom = Zoom
-                };
-            }
-        }
-
-        protected override void Render(System.Web.UI.HtmlTextWriter writer)
-        {
-            this.ImageUrl = CMap.Url;
-            base.Render(writer);
         }
 
         protected override void LoadViewState(object savedState)
         {
             if (savedState != null)
             {
-                Tuple<object, object[]> alldata = savedState as Tuple<object, object[]>;
-                base.LoadViewState(alldata.Item1);
+                object[] data = savedState as object[];
+                base.LoadViewState(data[0]);
 
-                CMarkers.LoadViewState(alldata.Item2[0]);
+                if (data[1] != null)
+                    Markers.LoadViewState(data[1]);
+
+                if (data[2] != null)
+                    Paths.LoadViewState(data[2]);
+
+                if (data[3] != null)
+                    Styles.LoadViewState(data[3]);
             }
         }
 
         protected override object SaveViewState()
         {
-            object[] savedata = new object[1];
-            savedata[0] = CMarkers.SaveViewState();
-            return new Tuple<object, object[]>(base.SaveViewState(), savedata);
+            object[] savedata = new object[4];
+            savedata[0] = base.SaveViewState();
+            savedata[1] = markers == null ? null : markers.SaveViewState();
+            savedata[2] = paths == null ? null : paths.SaveViewState();
+            savedata[3] = styles == null ? null : styles.SaveViewState();
+
+            return savedata;
         }
     }
 }

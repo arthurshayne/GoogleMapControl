@@ -46,24 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StaticMapControl\Modules\CMap.cs" />
-    <Compile Include="StaticMapControl\Modules\CObjectColor.cs" />
-    <Compile Include="StaticMapControl\Modules\LocationCollection.cs" />
-    <Compile Include="StaticMapControl\Modules\MarkerCollection.cs" />
-    <Compile Include="StaticMapControl\Modules\CLocation.cs" />
-    <Compile Include="StaticMapControl\Modules\CMarker.cs" />
-    <Compile Include="StaticMapControl\Modules\CPath.cs" />
+    <Compile Include="StaticMapControl\Editor\GenericCollectionEditor.cs" />
+    <Compile Include="StaticMapControl\Modules\Enums.cs" />
+    <Compile Include="StaticMapControl\Modules\Location.cs" />
+    <Compile Include="StaticMapControl\Modules\GenericStateManagedCollection.cs" />
+    <Compile Include="StaticMapControl\Modules\MapSize.cs" />
+    <Compile Include="StaticMapControl\Modules\MapStyle.cs" />
+    <Compile Include="StaticMapControl\Modules\Marker.cs" />
     <Compile Include="StaticMapControl\Designers\StaticMapDesigner.cs" />
-    <Compile Include="StaticMapControl\Modules\PathCollection.cs" />
+    <Compile Include="StaticMapControl\Modules\ObjectColor.cs" />
+    <Compile Include="StaticMapControl\Modules\Path.cs" />
     <Compile Include="StaticMapControl\StaticMapBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticMapControl\Modules\MapStyleCollection.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StaticMap\Nltd.Lib.GoogleMap.csproj">
-      <Project>{6CAAB1C9-8B3F-4D4A-B1F1-6D536AB74741}</Project>
-      <Name>Nltd.Lib.GoogleMap</Name>
-    </ProjectReference>
+    <Compile Include="StaticMapControl\Utility\Common.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
