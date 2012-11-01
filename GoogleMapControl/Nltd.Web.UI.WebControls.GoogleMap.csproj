@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StaticMapControl\Editor\GenericCollectionEditor.cs" />
     <Compile Include="StaticMapControl\Modules\Enums.cs" />
     <Compile Include="StaticMapControl\Modules\Location.cs" />
     <Compile Include="StaticMapControl\Modules\GenericStateManagedCollection.cs" />
