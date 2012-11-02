@@ -13,12 +13,13 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
     using Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl.Utility;
     using System.Drawing;
     using System.Web.UI.WebControls;
+    using System.Drawing.Design;
 
     public class Path : IStateManager
     {
         public Path()
         {
-            TrackViewState();
+            ((IStateManager)this).TrackViewState();
         }
 
         /// <summary>
@@ -57,8 +58,8 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         /// [optional] get or set path color
         /// </summary>
         [Category("Google")]
-        [DefaultValue(typeof(Color), "")]
         [TypeConverter(typeof(WebColorConverter))]
+        [Editor("System.Drawing.Design.ColorEditor, System.Drawing.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         public Color? CustomColor
         {
             get
@@ -113,8 +114,8 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         /// [optional] get or set path color
         /// </summary>
         [Category("Google")]
-        [DefaultValue(typeof(Color), "")]
         [TypeConverter(typeof(WebColorConverter))]
+        [Editor("System.Drawing.Design.ColorEditor, System.Drawing.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         public Color? CustomFillColor
         {
             get
@@ -164,8 +165,8 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
                 if (locations == null)
                 {
                     locations = new GenericStateManagedCollection<Location>();
-                    if (IsTrackingViewState)
-                        locations.TrackViewState();
+                    if (((IStateManager)this).IsTrackingViewState)
+                        ((IStateManager)locations).TrackViewState();
                 }
                 return locations;
             }
@@ -205,7 +206,7 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             }
         }
 
-        public bool IsTrackingViewState
+        bool IStateManager.IsTrackingViewState
         {
             get
             {
@@ -213,27 +214,27 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             }
         }
 
-        public void LoadViewState(object state)
+        void IStateManager.LoadViewState(object state)
         {
             if (state != null)
             {
                 object[] data = state as object[];
                 (ViewState as IStateManager).LoadViewState(data[0]);
                 if (data[1] != null)
-                    Locations.LoadViewState(data[1]);
+                    ((IStateManager)Locations).LoadViewState(data[1]);
             }
         }
 
-        public object SaveViewState()
+        object IStateManager.SaveViewState()
         {
             object[] data = new object[2];
             data[0] = (ViewState as IStateManager).SaveViewState();
-            data[1] = locations == null ? null : locations.SaveViewState();
+            data[1] = locations == null ? null : ((IStateManager)locations).SaveViewState();
 
             return data;
         }
 
-        public void TrackViewState()
+        void IStateManager.TrackViewState()
         {
             _isTrackViewState = true;
             (ViewState as IStateManager).TrackViewState();

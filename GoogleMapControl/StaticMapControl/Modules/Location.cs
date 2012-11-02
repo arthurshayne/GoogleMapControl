@@ -14,7 +14,7 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
     {
         public Location()
         {
-            TrackViewState();
+            ((IStateManager)this).TrackViewState();
         }
 
         /// <summary>
@@ -94,12 +94,12 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             }
         }
 
-        public bool IsTrackingViewState
+        bool IStateManager.IsTrackingViewState
         {
             get { return _isTrackViewState; }
         }
 
-        public void LoadViewState(object state)
+        void IStateManager.LoadViewState(object state)
         {
             if (state != null)
             {
@@ -107,12 +107,12 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             }
         }
 
-        public object SaveViewState()
+        object IStateManager.SaveViewState()
         {
             return (ViewState as IStateManager).SaveViewState();
         }
 
-        public void TrackViewState()
+        void IStateManager.TrackViewState()
         {
             _isTrackViewState = true;
             (ViewState as IStateManager).TrackViewState();
@@ -134,7 +134,7 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             this.Longitude = longitude;
         }
 
-        public override string  ToString()
+        public override string ToString()
         {
             return string.Format("{0},{1}",Latitude,Longitude);
         }

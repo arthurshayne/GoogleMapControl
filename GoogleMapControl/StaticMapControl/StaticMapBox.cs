@@ -459,13 +459,13 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
                 base.LoadViewState(data[0]);
 
                 if (data[1] != null)
-                    Markers.LoadViewState(data[1]);
+                    ((IStateManager)Markers).LoadViewState(data[1]);
 
                 if (data[2] != null)
-                    Paths.LoadViewState(data[2]);
+                    ((IStateManager)Paths).LoadViewState(data[2]);
 
                 if (data[3] != null)
-                    Styles.LoadViewState(data[3]);
+                    ((IStateManager)Styles).LoadViewState(data[3]);
             }
         }
 
@@ -473,9 +473,9 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         {
             object[] savedata = new object[4];
             savedata[0] = base.SaveViewState();
-            savedata[1] = markers == null ? null : markers.SaveViewState();
-            savedata[2] = paths == null ? null : paths.SaveViewState();
-            savedata[3] = styles == null ? null : styles.SaveViewState();
+            savedata[1] = markers == null ? null : ((IStateManager)markers).SaveViewState();
+            savedata[2] = paths == null ? null : ((IStateManager)paths).SaveViewState();
+            savedata[3] = styles == null ? null : ((IStateManager)styles).SaveViewState();
 
             return savedata;
         }

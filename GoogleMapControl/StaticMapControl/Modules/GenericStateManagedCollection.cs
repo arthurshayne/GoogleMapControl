@@ -24,12 +24,12 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
         # region IStateManager
         private bool _isTrackingViewState;
 
-        public bool IsTrackingViewState
+        bool IStateManager.IsTrackingViewState
         {
             get { return _isTrackingViewState; }
         }
 
-        public void LoadViewState(object state)
+        void IStateManager.LoadViewState(object state)
         {
             if (state != null)
             {
@@ -44,7 +44,7 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             }
         }
 
-        public object SaveViewState()
+        object IStateManager.SaveViewState()
         {
             int count = this.Count;
             object[] data = new object[count];
@@ -56,7 +56,7 @@ namespace Nltd.Web.UI.WebControls.GoogleMap.StaticMapControl
             return data;
         }
 
-        public void TrackViewState()
+        void IStateManager.TrackViewState()
         {
             _isTrackingViewState = true;
         }
